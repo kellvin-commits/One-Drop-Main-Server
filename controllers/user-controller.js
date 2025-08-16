@@ -7,8 +7,8 @@ const bcrypt=require('bcryptjs');
 const registerUser=async(req,res)=>{
 
 try {
-    const {username,email,password}=req.body;
-    if(!username ||!email ||!password){
+    const {username,email,password,role}=req.body;
+    if(!username ||!email ||!password ||!role){
         return res.status(400).json({
             success:false,
             message:'All fields are required!!'
@@ -27,6 +27,7 @@ try {
 
     const user=new User({
         username,
+        role,
         email,
         password:hashedPassword
     })
@@ -71,7 +72,7 @@ const loginUser=async(req,res)=>{
                 message:'Please enter a valid password!'
             })
         }
-        const token=jwt.sign({userId:user._id,userName:user.username},process.env.JWT_SECRET,{expiresIn:'7d'});
+        const token=jwt.sign({userId:user._id,userName:user.username,role:user.role},process.env.JWT_SECRET,{expiresIn:'7d'});
         return res.status(200).json({
             success:true,
             message:'Login successfully!',

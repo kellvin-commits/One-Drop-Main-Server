@@ -9,6 +9,10 @@ const galleryRoute=require('./routes/gallery-route');
 const messageRoute=require('./routes/message-route');
 const projectRoute=require('./routes/project-route');
 const statRoute=require('./routes/stat-route');
+const videoRoute=require('./routes/video-route');
+const profileRoute=require('./routes/profile');
+const settingRoute=require('./routes/settings-route');
+const verifyUser=require('./routes/profile-me');
 
 const app=express();
 const PORT=process.env.PORT;
@@ -24,6 +28,10 @@ app.use('/api/auth',userRoute);
 app.use('/api/message',messageRoute);
 app.use('/api/project',projectRoute);
 app.use('/api/stats',statRoute);
+app.use('/api/video',videoRoute);
+app.use('/api/profile',profileRoute);
+app.use('/api/setting',settingRoute);
+app.use('/api/dash',verifyUser);
 
 
 

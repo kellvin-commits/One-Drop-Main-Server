@@ -4,12 +4,18 @@ const projectSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    status:{
+    desc:{
         type:String
     },
-date:{
-    type:Date,
-    default:Date.now
+    filename:String,
+    src:String,
+      
+    status:{
+        type:String
+      },
+       date:{
+       type:Date,
+        default:Date.now
 }
 });
 

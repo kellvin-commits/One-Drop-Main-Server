@@ -1,18 +1,28 @@
 const Project=require('../models/project-model');
+const path=require('path');
+const fs=require('fs');
 
 
 const addNewProject=async(req,res)=>{
 
     try {
+        if(!req.file){
+            return res.status(400).json({
+                success:false,
+                message:'Please upload a file!!'
+            })
+        }
 
-    const project=req.body;
-    if(!project){
-        return res.status(400).json({
-            success:false,
-            message:'All fields should be filled!'
-        })
-    }
-    const newProject=await Project.create(project);
+    
+    const newProject=new Project({
+        name:req.body.name,
+        desc:req.body.desc,
+        filename:req.file.filename,
+        src:`/uploads/${req.file.filename}`,
+        status:req.body.status
+
+    })
+    await newProject.save();
     return res.status(201).json({
         success:true,
         message:"Project added successfully!",
@@ -67,6 +77,11 @@ const deleteProject=async(req,res)=>{
           success:false,
           message:'No project with the id found!!'
       })
+  }
+
+  const filePath=path.join(__dirname,"uploads",existPro.filename.trim());
+  if(fs.existsSync(filePath)){
+    fs.unlinkSync(filePath);
   }
   const deletedPro=await Project.findByIdAndDelete(project);
   return res.status(200).json({

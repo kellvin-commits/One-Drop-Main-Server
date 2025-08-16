@@ -102,8 +102,9 @@ const deleteImage=async(req,res)=>{
                 message:'image with the id not found!'
             })
         }
+
        
-       const imageFile = path.join(__dirname,"../uploads",exists.src.trim());
+       const imageFile = path.join(__dirname,"uploads",exists.filename.trim());
 
         if(fs.existsSync(imageFile)){
             fs.unlinkSync(imageFile);
